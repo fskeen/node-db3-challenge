@@ -25,8 +25,8 @@ function findById(id) {
 // Get steps for a given scheme
 function findSteps(id) {
     return db('schemes')
-        .select(["amount", "schemes.id AS scheme_id", "car_id", "vin", "make"])
-        .join("cars", "cars.id", "schemes.car_id")
+        .select(["scheme_name", "schemes.id AS scheme_id", "step_number", "instructions", "make"])
+        .join("steps", "schemes.id", "schemes.scheme_id")
         .where({ "schemes.id": id })
         .first();
 }
