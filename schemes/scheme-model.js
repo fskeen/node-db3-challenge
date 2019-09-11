@@ -6,8 +6,8 @@ module.exports = {
     add,
     update,
     remove,
-    getByQuery,
-    findSteps
+    findSteps,
+    addStep
 }
 
 // Get all schemes
@@ -32,22 +32,22 @@ function findSteps(id) {
 }
 
 // Post a scheme to the db
-function add(scheme) {
+function add(schemeData) {
     return db('schemes')
-        .insert(scheme)
-        .then(id => {
-            return getById(id[0])
+        .insert(schemeData)
+        .then(ids => {
+            return findById(ids[0])
         });
 }
 
 // Edit a scheme in the db
-function update(id, changes) {
+function update(changes, id) {
     return db('schemes')
         .where('id', id)
         .update(changes)
-        .then(id => {
-            return getById(id[0])
-        });;
+        .then(() => {
+            return findById(id)
+        }); 
 }
 
 // Delete a scheme in the db
@@ -58,8 +58,7 @@ function remove(id) {
 }
 
 // Get scheme list by specific params
-function getByQuery(limit, sortBy, sortDir) {
-    return db('schemes')
-        .limit(limit)
-        .orderBy(sortBy, sortDir)
+function addStep(step, scheme_id) {
+    return db('steps')
+        .insert(step);
 }
