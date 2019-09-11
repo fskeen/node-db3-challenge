@@ -25,10 +25,10 @@ function findById(id) {
 // Get steps for a given scheme
 function findSteps(id) {
     return db('schemes')
-        .select(["scheme_name", "schemes.id AS scheme_id", "step_number", "instructions", "make"])
-        .join("steps", "schemes.id", "schemes.scheme_id")
+        .select(["scheme_name", "step_number", "instructions"])
+        .join("steps", "schemes.id", "steps.scheme_id")
         .where({ "schemes.id": id })
-        .first();
+        .orderBy("step_number", "asc");
 }
 
 // Post a scheme to the db
